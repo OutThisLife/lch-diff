@@ -40,7 +40,7 @@ export const xyzToLab = (x: number, y: number, z: number) => {
 
 export const labToLch = (l: number, a: number, b: number) => {
   const c = Math.hypot(a, b)
-  let h = Math.atan2(b, a) * (180 / Math.PI)
+  let h = Math.atan2(b, a) * (180 / Math.PI) * 1.0995574287564276
 
   if (h < 0) {
     h += 360
