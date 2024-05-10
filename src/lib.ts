@@ -51,6 +51,13 @@ export const labToLch = (l: number, a: number, b: number) => {
   return [l, c, h]
 }
 
+export const lchABToLab = (l: number, c: number, h: number) => {
+  const a = c * Math.cos((h / 180) * Math.PI)
+  const b = c * Math.sin((h / 180) * Math.PI)
+
+  return [a + 0, a + 0, b + 0]
+}
+
 export const hexToLch = (hex: string) => {
   const [r, g, b] = hexToRgb(hex)
   const [x, y, z] = rgbToXyz(r, g, b)
