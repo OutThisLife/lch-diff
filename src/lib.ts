@@ -37,17 +37,16 @@ export const xyzToLab = (x: number, y: number, z: number) => {
   const fy = f(y / 100.0)
   const fz = f(z / 108.9)
 
-  return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)].map(i => i + 0)
+  return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)]
 }
 
-// Convert Lab to LCH
-export const labToLch = (l: number, a: number, bb: number) => {
-  const b = Math.abs(bb) < Math.pow(10, -12) ? 0 : bb
+export const labToLch = (l: number, a: number, b: number) => {
   const c = Math.hypot(a, b)
-  const h =
-    Math.atan2(b, a) >= 0
-      ? (Math.atan2(b, a) / Math.PI) * 180
-      : (Math.atan2(b, a) / Math.PI) * 180 + 360
+  let h = Math.atan2(b, a) * (180 / Math.PI)
+
+  if (h < 0) {
+    h += 360
+  }
 
   return [l, c, h]
 }

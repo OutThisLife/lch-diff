@@ -57,7 +57,7 @@ export default function Preview({
       '200': `color-mix(in lch, var(--bg), white 52.5%)`,
       '100': `color-mix(in lch, var(--bg), white 70%)`
     }),
-    [values]
+    []
   )
 
   return (

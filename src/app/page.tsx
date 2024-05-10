@@ -22,6 +22,7 @@ export default function Index() {
           )}>
           <Input
             label="From"
+            required
             onChange={e => setValue(st => [e.target.value, st[1]])}
             placeholder="#f00"
             value={values[0]}
@@ -29,6 +30,7 @@ export default function Index() {
 
           <Input
             label="To"
+            required
             onChange={e => setValue(st => [st[0], e.target.value])}
             placeholder="#00f"
             value={values[1]}
