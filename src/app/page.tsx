@@ -13,7 +13,7 @@ export default function Index() {
       className={clsx(
         'grid grid-rows-[auto_1fr] gap-5',
         'min-h-svh overflow-hidden',
-        'p-10'
+        'px-4 py-8 sm:p-10'
       )}>
       <form className={clsx('flex flex-col gap-y-3')}>
         <div
