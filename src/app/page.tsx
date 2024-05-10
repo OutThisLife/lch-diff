@@ -6,7 +6,7 @@ import Input from './components/Input'
 import Preview from './components/Preview'
 
 export default function Index() {
-  const [values, setValue] = useState<[string, string]>(['#f00', '#00f'])
+  const [values, setValue] = useState<[string, string]>(['#00f', '#f00'])
 
   return (
     <main

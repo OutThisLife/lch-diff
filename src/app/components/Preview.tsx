@@ -52,10 +52,10 @@ export default function Preview({
       '700': `color-mix(in lch, var(--bg), black 35%)`,
       '600': `color-mix(in lch, var(--bg), black 17.5%)`,
       '500': 'var(--bg)',
-      '400': `color-mix(in lch, var(--bg), white 17.5%)`,
-      '300': `color-mix(in lch, var(--bg), white 35%)`,
-      '200': `color-mix(in lch, var(--bg), white 52.5%)`,
-      '100': `color-mix(in lch, var(--bg), white 70%)`
+      '400': `color-mix(in lch, var(--bg), transparent 17.5%)`,
+      '300': `color-mix(in lch, var(--bg), transparent 35%)`,
+      '200': `color-mix(in lch, var(--bg), transparent 52.5%)`,
+      '100': `color-mix(in lch, var(--bg), transparent 70%)`
     }),
     []
   )

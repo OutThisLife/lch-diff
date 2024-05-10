@@ -13,7 +13,7 @@ export const hexToRgb = (hex: string) => {
 export const rgbToXyz = (r: number, g: number, b: number) => {
   const linearize = (c: number) => {
     c /= 255
-    return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+    return (c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)) * 100
   }
 
   r = linearize(r)
@@ -21,23 +21,21 @@ export const rgbToXyz = (r: number, g: number, b: number) => {
   b = linearize(b)
 
   return [
-    (0.4124 * r + 0.3576 * g + 0.1805 * b) * 100,
-    (0.2126 * r + 0.7152 * g + 0.0722 * b) * 100,
-    (0.0193 * r + 0.1192 * g + 0.9505 * b) * 100
+    r * 0.4124 + g * 0.3576 + b * 0.1805,
+    r * 0.2126 + g * 0.7152 + b * 0.0722,
+    r * 0.0193 + g * 0.1192 + b * 0.9505
   ]
 }
 
 export const xyzToLab = (x: number, y: number, z: number) => {
-  const eps = 216 / 24389
-  const kap = 24389 / 27
+  const f = (t: number) =>
+    t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 0.137931034
 
-  const f = (t: number) => (t > eps ? Math.cbrt(t) : (kap * t + 16) / 116)
+  x = f(x / 95.047)
+  y = f(y / 100.0)
+  z = f(z / 108.883)
 
-  const fx = f(x / 95.05)
-  const fy = f(y / 100.0)
-  const fz = f(z / 108.9)
-
-  return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)]
+  return [116 * y - 16, 500 * (x - y), 200 * (y - z)]
 }
 
 export const labToLch = (l: number, a: number, b: number) => {
@@ -51,17 +49,17 @@ export const labToLch = (l: number, a: number, b: number) => {
   return [l, c, h]
 }
 
-export const lchABToLab = (l: number, c: number, h: number) => {
+export const lchToLab = (l: number, c: number, h: number) => {
   const a = c * Math.cos((h / 180) * Math.PI)
   const b = c * Math.sin((h / 180) * Math.PI)
 
-  return [a + 0, a + 0, b + 0]
+  return [l, a, b]
 }
 
 export const hexToLch = (hex: string) => {
   const [r, g, b] = hexToRgb(hex)
   const [x, y, z] = rgbToXyz(r, g, b)
-  const [l, a, bLab] = xyzToLab(x, y, z)
+  const [l, a, bl] = xyzToLab(x, y, z)
 
-  return labToLch(l, a, bLab)
+  return labToLch(l, a, bl)
 }
