@@ -82,7 +82,7 @@ export default function Preview({
               Number(k) === 500 && 'aspect-video'
             )}>
             <strong>{k}</strong>
-            --bg: {v}
+            <code className="text-[.7rem]">--bg: {v}</code>
           </Slot>
         ))}
       </div>
