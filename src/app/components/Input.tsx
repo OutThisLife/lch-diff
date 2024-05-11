@@ -34,6 +34,17 @@ export default function Input({
         )}
         {...{ type, ...props }}
       />
+
+      <input
+        type="color"
+        className={clsx(
+          'absolute inset-y-0 right-0',
+          'w-10 h-full',
+          'appearance-none',
+          'cursor-pointer'
+        )}
+        {...props}
+      />
     </div>
   )
 }

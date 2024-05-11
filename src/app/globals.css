@@ -27,10 +27,20 @@
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
   }
-  
-  @layer utilities {
-    .text-balance {
-      text-wrap: balance;
+
+  [type="color"] {
+    &::-webkit-color-swatch-wrapper {
+      @apply p-0;
     }
+
+    &::-webkit-color-swatch {
+      @apply border-none;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }

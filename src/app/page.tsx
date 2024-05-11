@@ -18,7 +18,7 @@ export default function Index() {
       <form className={clsx('flex flex-col gap-y-3')}>
         <div
           className={clsx(
-            'flex gap-x-3 place-items-center place-content-between'
+            'flex flex-col sm:flex-row gap-3 place-items-center place-content-between'
           )}>
           <Input
             label="From"
