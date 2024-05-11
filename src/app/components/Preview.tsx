@@ -47,15 +47,15 @@ export default function Preview({
 
   const palette = useMemo(
     () => ({
-      '900': `color-mix(in lch, var(--bg), black 70%)`,
-      '800': `color-mix(in lch, var(--bg), black 52.5%)`,
-      '700': `color-mix(in lch, var(--bg), black 35%)`,
-      '600': `color-mix(in lch, var(--bg), black 17.5%)`,
-      '500': 'var(--bg)',
-      '400': `color-mix(in lch, var(--bg), transparent 17.5%)`,
-      '300': `color-mix(in lch, var(--bg), transparent 35%)`,
-      '200': `color-mix(in lch, var(--bg), transparent 52.5%)`,
-      '100': `color-mix(in lch, var(--bg), transparent 70%)`
+      900: `color-mix(in lch, var(--bg), black 70%)`,
+      800: `color-mix(in lch, var(--bg), black 52.5%)`,
+      700: `color-mix(in lch, var(--bg), black 35%)`,
+      600: `color-mix(in lch, var(--bg), black 17.5%)`,
+      500: `var(--bg)`,
+      400: `color-mix(in lch, var(--bg), transparent 17.5%)`,
+      300: `color-mix(in lch, var(--bg), transparent 35%)`,
+      200: `color-mix(in lch, var(--bg), transparent 52.5%)`,
+      100: `color-mix(in lch, var(--bg), transparent 70%)`
     }),
     []
   )
@@ -85,7 +85,10 @@ export default function Preview({
               } as CSSProperties
             }
             className={clsx(
-              'bg-[var(--bg1)] text-[color-mix(in_lch,_var(--bg1),_white_50%)]'
+              'bg-[var(--bg1)]',
+              Number(k) <= 300
+                ? `text-[color-mix(in_lch,_var(--bg1),_white_70%)]`
+                : `text-[color-mix(in_lch,_var(--bg1),_white_50%)]`
             )}>
             <strong>{k}</strong>
             --bg: {v}
