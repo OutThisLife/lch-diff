@@ -34,7 +34,7 @@
     }
 
     &::-webkit-color-swatch {
-      @apply border-none;
+      @apply rounded-md border-none;
     }
   }
 }

@@ -1,6 +1,14 @@
 import { hexToLch } from '@/lib'
 import clsx from 'clsx'
-import { CSSProperties, HTMLAttributes, useMemo } from 'react'
+import {
+  CSSProperties,
+  HTMLAttributes,
+  MouseEvent,
+  useCallback,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
 function Slot({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
@@ -16,12 +24,10 @@ function Slot({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   )
 }
 
-export default function Preview({
-  className,
-  convert,
-  values,
-  ...props
-}: PreviewProps) {
+export default function Preview({ convert, values, ...props }: PreviewProps) {
+  const [copied, setCopied] = useState<boolean>(false)
+  const alertRef = useRef<HTMLDivElement>(null!)
+
   const bg = useMemo(() => {
     const acc = []
 
@@ -60,33 +66,61 @@ export default function Preview({
     [bg]
   )
 
+  const onPointerDown = useCallback(
+    (str: string) => async (e: MouseEvent<HTMLDivElement>) => {
+      e.preventDefault()
+
+      await navigator.clipboard.writeText(str)
+      setCopied(true)
+
+      alertRef.current?.style.setProperty('left', `${e.clientX}px`)
+      alertRef.current?.style.setProperty('top', `${e.clientY}px`)
+
+      setTimeout(() => setCopied(false), 1e3)
+    },
+    []
+  )
+
   return (
-    <div
-      className={clsx('grid gap-3 w-full h-full overflow-hidden', className)}
-      style={{ '--base': values[0], '--bg': bg } as CSSProperties}
-      {...props}>
-      <div className={clsx('flex flex-col gap-y-0.5')}>
-        {Object.entries(palette).map(([k, v]) => (
-          <Slot
-            key={`slot-${k}`}
-            style={
-              {
-                '--bg1': v
-              } as CSSProperties
-            }
-            className={clsx(
-              'bg-[var(--bg1)]',
-              Number(k) <= 300
-                ? `text-[color-mix(in_lch,_var(--bg1),_white_70%)]`
-                : `text-[color-mix(in_lch,_var(--bg1),_white_50%)]`,
-              Number(k) === 500 && 'aspect-video'
-            )}>
-            <strong>{k}</strong>
-            <code className="text-[.7rem]">--bg: {v}</code>
-          </Slot>
-        ))}
+    <>
+      <div
+        style={{ '--base': values[0], '--bg': bg } as CSSProperties}
+        {...props}>
+        <div className={clsx('flex flex-col gap-y-0.5')}>
+          {Object.entries(palette).map(([k, v]) => (
+            <Slot
+              key={`slot-${k}`}
+              style={
+                {
+                  '--bg1': v
+                } as CSSProperties
+              }
+              className={clsx(
+                'bg-[var(--bg1)]',
+                Number(k) <= 300
+                  ? `text-[color-mix(in_lch,_var(--bg1),_white_70%)]`
+                  : `text-[color-mix(in_lch,_var(--bg1),_white_50%)]`,
+                Number(k) === 500 && 'aspect-video'
+              )}
+              onPointerDown={onPointerDown(v)}>
+              <strong>{k}</strong>
+              <code className="text-[.7rem]">--bg: {v}</code>
+            </Slot>
+          ))}
+        </div>
       </div>
-    </div>
+
+      <div
+        ref={alertRef}
+        className={clsx(
+          'absolute top-0 left-0 p-2 rounded-sm',
+          'bg-black text-white text-xs',
+          copied ? 'opacity-100' : 'opacity-0',
+          'transition-opacity duration-300'
+        )}>
+        Copied!
+      </div>
+    </>
   )
 }
 

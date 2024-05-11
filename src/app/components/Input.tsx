@@ -28,9 +28,7 @@ export default function Input({
           'ring-1 ring-inset ring-gray-300',
           'placeholder:text-gray-400 focus:ring-2',
           'focus:ring-inset focus:ring-indigo-400',
-          'disabled:bg-gray-100 disabled:text-gray-700',
-          type === 'range' &&
-            clsx('w-full h-2 bg-gray-100 mt-4', 'appearance-none')
+          'disabled:bg-gray-100 disabled:text-gray-700'
         )}
         {...{ type, ...props }}
       />
@@ -38,10 +36,9 @@ export default function Input({
       <input
         type="color"
         className={clsx(
-          'absolute inset-y-0 right-0',
-          'w-10 h-full',
-          'appearance-none',
-          'cursor-pointer'
+          'absolute inset-y-[.2em] right-[.2em]',
+          'w-10 h-auto',
+          'appearance-none cursor-pointer'
         )}
         {...props}
       />
