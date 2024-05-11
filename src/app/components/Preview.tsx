@@ -1,4 +1,4 @@
-import { hexToLch } from '@/lib'
+import { hexToLch, sleep } from '@/lib'
 import clsx from 'clsx'
 import {
   CSSProperties,
@@ -77,9 +77,11 @@ export default function Preview({ convert, values, ...props }: PreviewProps) {
         alertRef.current?.style.setProperty('left', `${e.clientX}px`)
         alertRef.current?.style.setProperty('top', `${e.clientY}px`)
 
-        setTimeout(() => setCopied(false), 1e3)
+        await sleep(1e3)
       } catch (e) {
         console.warn(e)
+      } finally {
+        setCopied(false)
       }
     },
     []

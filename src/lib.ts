@@ -63,3 +63,6 @@ export const hexToLch = (hex: string) => {
 
   return labToLch(l, a, bl)
 }
+
+export const sleep = async (ms: number) =>
+  new Promise(resolve => setTimeout(resolve, ms))
