@@ -68,15 +68,19 @@ export default function Preview({ convert, values, ...props }: PreviewProps) {
 
   const onPointerDown = useCallback(
     (str: string) => async (e: MouseEvent<HTMLDivElement>) => {
-      e.preventDefault()
+      try {
+        e.preventDefault()
 
-      await navigator.clipboard.writeText(str)
-      setCopied(true)
+        await navigator.clipboard.writeText(str)
+        setCopied(true)
 
-      alertRef.current?.style.setProperty('left', `${e.clientX}px`)
-      alertRef.current?.style.setProperty('top', `${e.clientY}px`)
+        alertRef.current?.style.setProperty('left', `${e.clientX}px`)
+        alertRef.current?.style.setProperty('top', `${e.clientY}px`)
 
-      setTimeout(() => setCopied(false), 1e3)
+        setTimeout(() => setCopied(false), 1e3)
+      } catch (e) {
+        console.warn(e)
+      }
     },
     []
   )
