@@ -6,7 +6,7 @@ function Slot({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={clsx(
-        'flex flex-col place-content-center place-items-center gap-y-1.5',
+        'flex place-items-center place-content-between gap-1.5',
         'rounded-md shadow-lg p-5',
         'text-balance text-xs leading-none',
         className
@@ -51,13 +51,13 @@ export default function Preview({
       800: `color-mix(in lch, var(--bg), black 52.5%)`,
       700: `color-mix(in lch, var(--bg), black 35%)`,
       600: `color-mix(in lch, var(--bg), black 17.5%)`,
-      500: `var(--bg)`,
+      500: bg,
       400: `color-mix(in lch, var(--bg), transparent 17.5%)`,
       300: `color-mix(in lch, var(--bg), transparent 35%)`,
       200: `color-mix(in lch, var(--bg), transparent 52.5%)`,
       100: `color-mix(in lch, var(--bg), transparent 70%)`
     }),
-    []
+    [bg]
   )
 
   return (
@@ -65,16 +65,6 @@ export default function Preview({
       className={clsx('grid gap-3 w-full h-full overflow-hidden', className)}
       style={{ '--base': values[0], '--bg': bg } as CSSProperties}
       {...props}>
-      <Slot
-        className={clsx(
-          'bg-[var(--bg)] text-[color-mix(in_lch,_var(--bg),_white_70%)]',
-          'aspect-video'
-        )}>
-        <strong>500</strong>
-        --bg: {bg}
-        {convert && <div>--base: {values[0]}</div>}
-      </Slot>
-
       <div className={clsx('flex flex-col gap-y-0.5')}>
         {Object.entries(palette).map(([k, v]) => (
           <Slot
@@ -88,7 +78,8 @@ export default function Preview({
               'bg-[var(--bg1)]',
               Number(k) <= 300
                 ? `text-[color-mix(in_lch,_var(--bg1),_white_70%)]`
-                : `text-[color-mix(in_lch,_var(--bg1),_white_50%)]`
+                : `text-[color-mix(in_lch,_var(--bg1),_white_50%)]`,
+              Number(k) === 500 && 'aspect-video'
             )}>
             <strong>{k}</strong>
             --bg: {v}
