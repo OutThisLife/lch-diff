@@ -62,15 +62,13 @@ export default function Preview({
 
   return (
     <div
-      className={clsx(
-        'grid grid-cols-2 gap-3 w-full h-full overflow-hidden',
-        className
-      )}
+      className={clsx('grid gap-3 w-full h-full overflow-hidden', className)}
       style={{ '--base': values[0], '--bg': bg } as CSSProperties}
       {...props}>
       <Slot
         className={clsx(
-          'bg-[var(--bg)] text-[color-mix(in_lch,_var(--bg),_white_70%)]'
+          'bg-[var(--bg)] text-[color-mix(in_lch,_var(--bg),_white_70%)]',
+          'aspect-video'
         )}>
         <strong>500</strong>
         --bg: {bg}

@@ -40,7 +40,7 @@ export default function Index() {
 
       <aside
         className={clsx(
-          'grid place-content-stretch place-items-stretch gap-y-3'
+          'grid grid-cols-2 place-content-stretch place-items-stretch gap-3'
         )}>
         <Preview {...{ values }} />
         <Preview convert {...{ values }} />
