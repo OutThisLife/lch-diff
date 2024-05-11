@@ -6,7 +6,7 @@ function Slot({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={clsx(
-        'flex flex-col place-content-center place-items-center gap-y-1',
+        'flex flex-col place-content-center place-items-center gap-y-1.5',
         'rounded-md shadow-lg p-5',
         'text-balance text-xs leading-none',
         className
@@ -35,7 +35,7 @@ export default function Preview({
         `calc(${prefix} ${v1 - v0 >= 0 ? '+' : '-'} ${Math.abs(v1 - v0).toFixed(2)})`
 
       acc.push(
-        `from ${values[0]}`,
+        `from var(--base)`,
         f('l', l0, l1),
         f('c', c0, c1),
         f('h', h0, h1)
@@ -66,7 +66,7 @@ export default function Preview({
         'grid grid-cols-2 gap-3 w-full h-full overflow-hidden',
         className
       )}
-      style={{ '--bg': bg } as CSSProperties}
+      style={{ '--base': values[0], '--bg': bg } as CSSProperties}
       {...props}>
       <Slot
         className={clsx(
@@ -74,6 +74,7 @@ export default function Preview({
         )}>
         <strong>500</strong>
         --bg: {bg}
+        {convert && <div>--base: {values[0]}</div>}
       </Slot>
 
       <div className={clsx('flex flex-col gap-y-0.5')}>
